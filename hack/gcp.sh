@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function setup_gcloud_noomi_vnext_dev {
-    if [[ -z $GCSKEY ]];
+    if [[ -z $GCSKEY ]]; then
         echo "Missing required key path GCSKEY"
         exit 1
     fi
@@ -14,7 +14,7 @@ function setup_gcloud_noomi_vnext_dev {
 }
 
 function setup_gcloud_noomi_vnext_ci {
-    if [[ -z $GCSKEY ]];
+    if [[ -z $GCSKEY ]]; then
         echo "Missing required key path GCSKEY"
         exit 1
     fi
