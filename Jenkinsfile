@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh "mkdir -p /serviceaccounts"
+                sh "sudo mkdir -p /serviceaccounts"
             }
         }
         stage('GCP-Setup') {
