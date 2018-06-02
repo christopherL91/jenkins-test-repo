@@ -4,7 +4,7 @@ function main {
     local cmd=${1:-}
     case $cmd in
         configure-docker-helper)
-            gcloud auth configure-docker
+            gcloud auth configure-docker --quiet
             ;;
         *)
             echo $"Usage: $0 {configure-docker-helper}"
