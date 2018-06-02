@@ -20,7 +20,6 @@ function setup_gcloud_noomi_vnext_ci {
 }
 
 function main {
-    mkdir -p /serviceaccounts
     local cmd=${1:-}
     case $cmd in
         setup-ci)
