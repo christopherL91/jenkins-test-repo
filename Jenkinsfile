@@ -1,12 +1,17 @@
-// this guarantees the node will use this template
 def label = "mypod-${UUID.randomUUID().toString()}"
-podTemplate(label: label) {
-    node(label) {
+
+pipeline {
+    agent {
+        kubernetes {
+            label: label
+        }
+    }
+    stages {
         stage('Checkout') {
             checkout scm
         }
-        stage('Run shell') {
-            sh 'ls -li'
+        stage('Docker_Setup') {
+            sh 'hack/docker_setup.sh'
         }
     }
 }
