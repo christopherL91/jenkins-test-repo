@@ -9,14 +9,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh '''
-                    sudo mkdir -p /serviceaccounts
-                    sudo chown -R jenkins:jenkins /serviceaccounts
-                '''
             }
         }
         stage('GCP-Setup') {
             steps {
+                sh '''
+                    sudo mkdir -p /serviceaccounts
+                    sudo chown -R jenkins:jenkins /serviceaccounts
+                '''
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-ci', variable: 'GCSKEY')
                 ]) {
@@ -42,7 +42,7 @@ pipeline {
                 sh '''
                     gcloud config configurations activate noomi-vnext-ci
                     export GOOGLE_APPLICATION_CREDENTIALS=/serviceaccounts/noomi-vnext-ci.json
-                    gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+                    gcloud auth configure-docker
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }
