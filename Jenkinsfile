@@ -42,8 +42,7 @@ pipeline {
                 sh '''
                     gcloud config configurations activate noomi-vnext-ci
                     export GOOGLE_APPLICATION_CREDENTIALS=/serviceaccounts/noomi-vnext-ci.json
-                    gcloud config configurations activate noomi-vnext-ci
-                    sudo docker login -u _json_key --password-stdin https://eu.gcr.io < /serviceaccounts/noomi-vnext-ci.json
+                    gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://gcr.io
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }
