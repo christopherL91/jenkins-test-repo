@@ -17,12 +17,12 @@ pipeline {
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-ci', variable: 'GCSKEY')
                 ]) {
-                        sh 'cp ${GCSKEY} /serviceaccounts/noomi-vnext-ci.json'
+                        sh 'sudo cp ${GCSKEY} /serviceaccounts/noomi-vnext-ci.json'
                 }
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-dev', variable: 'GCSKEY')
                 ]) {
-                        sh 'cp ${GCSKEY} /serviceaccounts/noomi-vnext-dev.json'
+                        sh 'sudo cp ${GCSKEY} /serviceaccounts/noomi-vnext-dev.json'
                 }
 
                 sh '''
