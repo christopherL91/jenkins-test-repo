@@ -1,11 +1,6 @@
 #!/bin/bash
 
 function setup_gcloud_noomi_vnext_dev {
-    if [[ -z $GCSKEY ]]; then
-        echo "Missing required key path GCSKEY"
-        exit 1
-    fi
-    cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-dev.json
     gcloud config configurations create noomi-vnext-dev
     gcloud config configurations activate noomi-vnext-dev
     gcloud auth activate-service-account --key-file=${GCSKEY}

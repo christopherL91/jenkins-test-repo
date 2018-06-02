@@ -9,22 +9,30 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh "mkdir -p ~/serviceaccounts"
             }
         }
-        stage('Docker_Setup') {
+        stage('GCP-Setup') {
             steps {
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-ci', variable: 'GCSKEY')
                 ]) {
-                    sh "hack/gcp.sh setup-ci"
+                        sh 'cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-ci.json'
                 }
-                sh '''
+                withCredentials([
+                    file(credentialsId: 'noomi-vnext-dev', variable: 'GCSKEY')
+                ]) {
+                        sh 'cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-dev.json'
+                }
+            }
+        }
+        stage('Docker pull') {
+            sh '''
                     hack/gcp.sh use-ci
-                    env
+                    echo ${GOOGLE_APPLICATION_CREDENTIALS}
                     hack/docker.sh configure-docker-helper
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
-            }
         }
     }
 }
