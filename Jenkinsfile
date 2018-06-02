@@ -23,7 +23,7 @@ pipeline {
                 }
                 sh '''
                     hack/docker.sh configure-docker-helper
-                    sudo docker info
+                    cat $GOOGLE_APPLICATION_CREDENTIALS
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }

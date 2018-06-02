@@ -1,6 +1,11 @@
 #!/bin/bash
 
 function setup_gcloud_noomi_vnext_dev {
+    if [[ -z $GCSKEY ]];
+        echo "Missing required key path GCSKEY"
+        exit 1
+    fi
+    cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-dev.json
     gcloud config configurations create noomi-vnext-dev
     gcloud config configurations activate noomi-vnext-dev
     gcloud auth activate-service-account --key-file=${GCSKEY}
@@ -9,6 +14,11 @@ function setup_gcloud_noomi_vnext_dev {
 }
 
 function setup_gcloud_noomi_vnext_ci {
+    if [[ -z $GCSKEY ]];
+        echo "Missing required key path GCSKEY"
+        exit 1
+    fi
+    cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-ci.json
     gcloud config configurations create noomi-vnext-ci
     gcloud config configurations activate noomi-vnext-ci
     gcloud auth activate-service-account --key-file=${GCSKEY}
@@ -18,6 +28,7 @@ function setup_gcloud_noomi_vnext_ci {
 }
 
 function main {
+    mkdir -p ~/serviceaccounts
     local cmd=${1:-}
     case $cmd in
         setup-ci)
@@ -28,9 +39,11 @@ function main {
             ;;
         use-ci)
             gcloud config configurations activate noomi-vnext-ci
+            export GOOGLE_APPLICATION_CREDENTIALS=~/serviceaccounts/noomi-vnext-ci.json
             ;;
         use-dev)
             gcloud config configurations activate noomi-vnext-dev
+            export GOOGLE_APPLICATION_CREDENTIALS=~/serviceaccounts/noomi-vnext-dev.json
             ;;
         *)
             echo $"Usage: $0 {setup-ci|setup-dev|use-ci|use-dev}"
