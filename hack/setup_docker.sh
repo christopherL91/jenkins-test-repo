@@ -2,8 +2,8 @@
 
 function main {
     echo "hello from setup_docker.sh"
-    sudo docker version
-    sudo docker ps
+    docker version
+    docker ps
 }
 
 main $@
