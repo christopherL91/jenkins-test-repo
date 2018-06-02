@@ -2,6 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label "mypod-${UUID.randomUUID().toString()}"
+            defaultContainer 'jnlp'
         }
     }
     stages {
