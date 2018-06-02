@@ -14,9 +14,9 @@ pipeline {
         stage('Docker_Setup') {
             steps {
                 withCredentials([
-                    file(credentialsId: 'noomi-vnext-dev', variable: 'FILE')
+                    file(credentialsId: 'noomi-vnext-dev', variable: 'GCSKEY')
                 ]) {
-                    sh 'cat $FILE'
+                    sh 'hack/setup_gcp.sh'
                 }
                 sh 'hack/setup_docker.sh'
             }
