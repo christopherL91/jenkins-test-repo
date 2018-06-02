@@ -23,6 +23,7 @@ pipeline {
                 }
                 sh '''
                     hack/docker.sh configure-docker-helper
+                    gcloud info
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }
