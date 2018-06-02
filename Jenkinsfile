@@ -27,6 +27,8 @@ pipeline {
 
                 sh '''
                     ls -li ~/serviceaccounts
+                    cat ~/serviceaccounts/noomi-vnext-ci.json
+                    cat ~/serviceaccounts/noomi-vnext-dev.json
                     hack/gcp.sh setup-dev
                     hack/gcp.sh setup-ci
                 '''
