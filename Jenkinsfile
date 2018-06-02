@@ -26,6 +26,7 @@ pipeline {
                 }
 
                 sh '''
+                    ls -li ~/serviceaccounts
                     hack/gcp.sh setup-dev
                     hack/gcp.sh setup-ci
                 '''
