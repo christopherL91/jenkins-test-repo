@@ -16,14 +16,12 @@ pipeline {
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-ci', variable: 'GCSKEY')
                 ]) {
-                    sh '''
-                        hack/gcp.sh setup-ci
-                        hack/gcp.sh use-ci
-                    '''
+                    sh "hack/gcp.sh setup-ci"
                 }
                 sh '''
+                    hack/gcp.sh use-ci
+                    env
                     hack/docker.sh configure-docker-helper
-                    cat $GOOGLE_APPLICATION_CREDENTIALS
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }
