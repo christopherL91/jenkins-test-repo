@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Docker_Setup') {
             steps {
-                sh 'hack/docker_setup.sh'
+                sh 'hack/setup_docker.sh'
             }
         }
     }
