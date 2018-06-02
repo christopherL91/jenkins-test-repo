@@ -15,8 +15,8 @@ function setup_gcloud_noomi_vnext_ci {
     gcloud auth activate-service-account \
     --key-file=~/serviceaccounts/noomi-vnext-ci.json
     gcloud config set project noomi-vnext-ci
-    gcloud config set container/cluster ci
     gcloud config set compute/region europe-west1
+    gcloud config set container/cluster ci
 }
 
 function main {
