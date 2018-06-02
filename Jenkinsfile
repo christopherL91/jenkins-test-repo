@@ -1,9 +1,7 @@
-def label = "mypod-${UUID.randomUUID().toString()}"
-
 pipeline {
     agent {
         kubernetes {
-            label: label
+            label "mypod-${UUID.randomUUID().toString()}"
         }
     }
     stages {
