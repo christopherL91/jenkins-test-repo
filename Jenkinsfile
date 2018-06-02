@@ -6,10 +6,14 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            checkout scm
+            steps {
+                checkout scm
+            }
         }
         stage('Docker_Setup') {
-            sh 'hack/docker_setup.sh'
+            steps {
+                sh 'hack/docker_setup.sh'
+            }
         }
     }
 }
