@@ -27,12 +27,14 @@ pipeline {
             }
         }
         stage('Docker pull') {
-            sh '''
+            steps {
+                sh '''
                     hack/gcp.sh use-ci
                     echo ${GOOGLE_APPLICATION_CREDENTIALS}
                     hack/docker.sh configure-docker-helper
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
+            }
         }
     }
 }
