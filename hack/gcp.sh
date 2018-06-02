@@ -3,20 +3,17 @@
 function setup_gcloud_noomi_vnext_dev {
     gcloud config configurations create noomi-vnext-dev
     gcloud config configurations activate noomi-vnext-dev
-    gcloud auth activate-service-account --key-file=${GCSKEY}
+    gcloud auth activate-service-account \
+    --key-file=~/serviceaccounts/noomi-vnext-dev.json
     gcloud config set project noomi-vnext-dev-202112
     gcloud config set container/cluster be-dev
 }
 
 function setup_gcloud_noomi_vnext_ci {
-    if [[ -z $GCSKEY ]]; then
-        echo "Missing required key path GCSKEY"
-        exit 1
-    fi
-    cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-ci.json
     gcloud config configurations create noomi-vnext-ci
     gcloud config configurations activate noomi-vnext-ci
-    gcloud auth activate-service-account --key-file=${GCSKEY}
+    gcloud auth activate-service-account \
+    --key-file=~/serviceaccounts/noomi-vnext-ci.json
     gcloud config set project noomi-vnext-ci
     gcloud config set container/cluster ci
     gcloud config set compute/region europe-west1

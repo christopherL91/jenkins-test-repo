@@ -24,6 +24,11 @@ pipeline {
                 ]) {
                         sh 'cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-dev.json'
                 }
+
+                sh '''
+                    hack/gcp.sh setup-dev
+                    hack/gcp.sh setup-ci
+                '''
             }
         }
         stage('Docker pull') {
