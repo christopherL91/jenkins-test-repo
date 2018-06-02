@@ -5,6 +5,7 @@ function setup_gcloud_noomi_vnext_dev {
     gcloud config configurations activate noomi-vnext-dev
     gcloud auth activate-service-account --key-file=${GCSKEY}
     gcloud config set project noomi-vnext-dev-202112
+    gcloud config set container/cluster be-dev
 }
 
 function setup_gcloud_noomi_vnext_ci {
@@ -12,6 +13,8 @@ function setup_gcloud_noomi_vnext_ci {
     gcloud config configurations activate noomi-vnext-ci
     gcloud auth activate-service-account --key-file=${GCSKEY}
     gcloud config set project noomi-vnext-ci
+    gcloud config set container/cluster ci
+    gcloud config set compute/region europe-west1
 }
 
 function main {
