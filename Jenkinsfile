@@ -40,9 +40,10 @@ pipeline {
         stage('Docker pull') {
             steps {
                 sh '''
-                    hack/gcp.sh use-ci
-                    echo ${GOOGLE_APPLICATION_CREDENTIALS}
-                    hack/docker.sh configure-docker-helper
+                    gcloud config configurations activate noomi-vnext-ci
+                    export GOOGLE_APPLICATION_CREDENTIALS=/serviceaccounts/noomi-vnext-ci.json
+                    gcloud config configurations activate noomi-vnext-ci
+                    gcloud auth configure-docker --quiet
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }

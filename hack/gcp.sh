@@ -30,7 +30,6 @@ function main {
             ;;
         use-ci)
             gcloud config configurations activate noomi-vnext-ci
-            export GOOGLE_APPLICATION_CREDENTIALS=/serviceaccounts/noomi-vnext-ci.json
             ;;
         use-dev)
             gcloud config configurations activate noomi-vnext-dev
