@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            label ""
+            label "jnlp-slave"
             inheritFrom "jnlp-slave"
         }
     }
@@ -14,11 +14,17 @@ pipeline {
         stage('Docker_Setup') {
             steps {
                 withCredentials([
-                    file(credentialsId: 'noomi-vnext-dev', variable: 'GCSKEY')
+                    file(credentialsId: 'noomi-vnext-ci', variable: 'GCSKEY')
                 ]) {
-                    sh 'hack/setup_gcp.sh'
+                    sh '''
+                        hack/gcp.sh setup-ci
+                        hack/gcp.sh use-ci
+                    '''
                 }
-                sh 'hack/setup_docker.sh'
+                sh '''
+                    hack/docker.sh configure-docker-helper
+                    sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
+                '''
             }
         }
     }
