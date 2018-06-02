@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        label "jnlp-slave"
+        kubernetes {
+            label "jnlp-slave"
+            inheritFrom "jnlp-slave"
+        }
     }
     stages {
         stage('Checkout') {
