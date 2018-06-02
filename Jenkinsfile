@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh "mkdir -p ~/serviceaccounts"
+                sh "mkdir -p /serviceaccounts"
             }
         }
         stage('GCP-Setup') {
@@ -17,18 +17,18 @@ pipeline {
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-ci', variable: 'GCSKEY')
                 ]) {
-                        sh 'cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-ci.json'
+                        sh 'cp ${GCSKEY} /serviceaccounts/noomi-vnext-ci.json'
                 }
                 withCredentials([
                     file(credentialsId: 'noomi-vnext-dev', variable: 'GCSKEY')
                 ]) {
-                        sh 'cp ${GCSKEY} ~/serviceaccounts/noomi-vnext-dev.json'
+                        sh 'cp ${GCSKEY} /serviceaccounts/noomi-vnext-dev.json'
                 }
 
                 sh '''
-                    ls -li ~/serviceaccounts
-                    cat ~/serviceaccounts/noomi-vnext-ci.json
-                    cat ~/serviceaccounts/noomi-vnext-dev.json
+                    sudo ls -li /serviceaccounts
+                    sudo cat /serviceaccounts/noomi-vnext-ci.json
+                    sudo cat /serviceaccounts/noomi-vnext-dev.json
                     hack/gcp.sh setup-dev
                     hack/gcp.sh setup-ci
                 '''
