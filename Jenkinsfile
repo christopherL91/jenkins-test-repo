@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "mypod-${UUID.randomUUID().toString()}"
+        label "jnlp-slave"
     }
     stages {
         stage('Checkout') {
