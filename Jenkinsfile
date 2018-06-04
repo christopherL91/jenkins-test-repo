@@ -37,9 +37,13 @@ pipeline {
         stage('Docker pull') {
             steps {
                 sh '''
-                    gcloud config configurations activate noomi-vnext-ci
-                    gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
-                    sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
+                    #gcloud config configurations activate noomi-vnext-ci
+                    #gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+                    #sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
+
+                    gcloud config configurations activate noomi-vnext-dev
+                    gcloud container clusters get-credentials be-dev --zone europe-west4-c --project noomi-vnext-dev-202112
+                    kubectl get pods
                 '''
             }
         }
