@@ -34,16 +34,29 @@ pipeline {
                 '''
             }
         }
-        stage('Docker pull') {
+        stage('Docker build') {
             steps {
                 sh '''
-                    #gcloud config configurations activate noomi-vnext-ci
-                    #gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
-                    #sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
+                    sudo docker build -t eu.gcr.io/noomi-vnext-ci/hello-world:1.0.0 .
 
+                '''
+            }
+        }
+        stage('Docker push') {
+            steps {
+                sh '''
+                    gcloud config configurations activate noomi-vnext-ci
+                    gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+                    sudo docker push eu.gcr.io/noomi-vnext-ci/hello-world:1.0.0
+                '''
+            }
+        }
+        stage('Kubernetes deployment') {
+            steps {
+                sh '''
                     gcloud config configurations activate noomi-vnext-dev
                     gcloud container clusters get-credentials be-dev --zone europe-west4-c --project noomi-vnext-dev-202112
-                    kubectl get pods
+                    kubectl apply -f deployment.yaml
                 '''
             }
         }
