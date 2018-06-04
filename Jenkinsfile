@@ -38,8 +38,7 @@ pipeline {
             steps {
                 sh '''
                     gcloud config configurations activate noomi-vnext-ci
-                    gsutil ls
-                    gcloud auth configure-docker
+                    gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
             }
