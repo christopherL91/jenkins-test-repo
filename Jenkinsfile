@@ -29,9 +29,6 @@ pipeline {
                 }
 
                 sh '''
-                    ls -li /serviceaccounts
-                    cat /serviceaccounts/noomi-vnext-ci.json
-                    cat /serviceaccounts/noomi-vnext-dev.json
                     hack/gcp.sh setup-dev
                     hack/gcp.sh setup-ci
                 '''
@@ -41,7 +38,7 @@ pipeline {
             steps {
                 sh '''
                     gcloud config configurations activate noomi-vnext-ci
-                    export GOOGLE_APPLICATION_CREDENTIALS=/serviceaccounts/noomi-vnext-ci.json
+                    gsutil ls
                     gcloud auth configure-docker
                     sudo docker pull eu.gcr.io/noomi-vnext-ci/jnlp-slave:1.0.0
                 '''
